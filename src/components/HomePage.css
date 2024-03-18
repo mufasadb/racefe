@@ -1,0 +1,25 @@
+.HomePage {
+  background-color: #141D26;
+  color: white;
+}
+
+.TableContainer-root {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 20px;
+  margin: 20px;
+}
+
+.MuiTable-root {
+  width: 100%;
+}
+
+.MuiTableContainer-root {
+  max-width: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .TableContainer-root {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
