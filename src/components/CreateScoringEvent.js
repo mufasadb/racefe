@@ -133,7 +133,7 @@ const ScoringSubmission = () => {
     event.preventDefault()
 
     const data = {
-      scoreable_objectId: parseInt(scoreableObjectID),
+      scoreable_object_id: parseInt(scoreableObjectID),
       league_id: parseInt(leagueID),
       team_id: teamID || null,
       user_id: userID || null,
