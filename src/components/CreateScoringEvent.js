@@ -133,13 +133,13 @@ const ScoringSubmission = () => {
     event.preventDefault()
 
     const data = {
-      scoreable_object_id: parseInt(scoreableObjectID),
-      league_id: parseInt(leagueID),
-      team_id: teamID || null,
-      user_id: userID || null,
-      character_id: characterID || null,
-      evidence_url: evidenceURL,
-      is_approved: isAdmin ? isApproved : false // Only set if admin
+      scoreableObjectId: parseInt(scoreableObjectID),
+      leagueId: parseInt(leagueID),
+      teamId: teamID || null,
+      userId: userID || null,
+      characterId: characterID || null,
+      evidenceUrl: evidenceURL,
+      isApproved: isAdmin ? isApproved : false // Only set if admin
     }
 
     console.log(data)
