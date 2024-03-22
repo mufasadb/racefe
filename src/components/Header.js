@@ -31,14 +31,16 @@ const Header = ({ isLoggedIn, isAdmin }) => {
                 <li>
                   <Link to='/CreateCharacter'>Create Character</Link>
                 </li>
+                <li>
+                  <Link to='/CreateScoreableObject'>
+                    Create Scoreable Event
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/scoringEvents'>Review Scored Events</Link>
+                </li>
               </>
             )}
-            <li>
-              <Link to='/CreateScoreableObject'>Create Scoreable Event</Link>
-            </li>
-            <li>
-              <Link to='/scoringEvents'>Review Scored Events</Link>
-            </li>
           </>
         )}
         {!isLoggedIn && (

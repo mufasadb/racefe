@@ -75,7 +75,7 @@ const AdminOnlyRoute = ({ component: Component, ...rest }) => {
         if (!data) {
           // Redirect the user to the Discord login page
           window.location.href =
-            'https://discord.com/api/oauth2/authorize?client_id=1093461191705239562&redirect_uri=http%3A%2F%2Flocalhost%3A8001%2Fauth%2Fdiscord%2Fcallback&response_type=code&scope=identify%20email'
+            `${process.env.REACT_APP_FRONTEND_URL}${process.env.REACT_APP_FRONTEND_PORT}/`
         }
       })
   }, [])
@@ -153,7 +153,7 @@ const App = () => {
                 path='/CreateScoreableObject'
                 component={CreateScoreableObject}
               />
-              <LoggedInRoute
+              <AdminOnlyRoute
                 path='/CreateScoringEvent'
                 component={CreateScoringEvent}
               />

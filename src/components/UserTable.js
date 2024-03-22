@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import DeleteIcon from '@mui/icons-material/Delete'
+import UserContext from '../context/UserContext'
 
 const UserTable = () => {
+  const { userId, teamId, isAdmin, isLoggedIn, isTeamLeader } =
+    React.useContext(UserContext)
   const [users, setUsers] = useState([])
   const [teams, setTeams] = useState([])
   const [teamCount, setTeamCount] = useState([])
@@ -138,6 +141,7 @@ const UserTable = () => {
             <th>Username</th>
             <th>Team</th>
             <th>Actions</th>
+            {isAdmin && <th>Delete</th>}
           </tr>
         </thead>
         <tbody>
@@ -150,6 +154,7 @@ const UserTable = () => {
                   onChange={e =>
                     handleTeamChange(user.id, parseInt(e.target.value))
                   }
+                  disabled={!isAdmin}
                 >
                   <option value=''>Select a team</option>
                   {teams.map(team => (
@@ -163,14 +168,14 @@ const UserTable = () => {
                 <select
                   value={user.role}
                   onChange={e => handleRoleChange(user.id, e.target.value)}
-                  disabled={user.role !== 'admin'}
+                  disabled={!isAdmin}
                 >
                   <option value='player'>Player</option>
                   <option value='team_leader'>Team Leader</option>
                   <option value='admin'>Admin</option>
                 </select>
               </td>
-              {user.role !== 'admin' && (
+              {isAdmin && (
                 <td>
                   <button onClick={() => handleDeleteUser(user.id)}>
                     <DeleteIcon />

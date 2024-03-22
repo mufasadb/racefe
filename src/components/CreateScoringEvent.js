@@ -23,7 +23,26 @@ const ScoringSubmission = () => {
   // Fetch scoreable objects
   useEffect(() => {
     const fetchScoreableObjects = async () => {
-      if (isTeamLeader) {
+      if (!isTeamLeader) {
+        try {
+          const responses = await Promise.all([
+            fetch(
+              `${process.env.REACT_APP_BACKEND_URL}${
+                process.env.REACT_APP_BACKEND_PORT
+              }/scoreable-objects/available/player-bounties/${
+                userId ? userId : 1
+              }`
+            ),
+            fetch(
+              `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoreable-objects/available/league-bounties`
+            )
+          ])
+          const data = await Promise.all(responses.map(res => res.json()))
+          setScoreableObjects(data.flat())
+          setSelectedScoreable(scoreableObjects[0].id)
+        } catch (error) {
+          console.error(error)
+        }
       } else {
         try {
           const responses = await Promise.all([
