@@ -214,7 +214,8 @@ button:hover {
   display: inline-block;
   margin-right: 10px;
   padding: 5px 10px;
-  background-color: #2d3748; /* Adjust the color to match your design */
+  /* background-color: #2d3748; Adjust the color to match your design */
+  background-color: transparent;
   color: white;
   border-radius: 10px;
 }
