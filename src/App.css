@@ -8,6 +8,10 @@ body {
 }
 
 .App {
+  background-image: url("/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -294,21 +298,20 @@ tr {
 .category-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px; 
+  margin-bottom: 8px;
 }
 
 .category-label {
-
-  font-size: 0.875rem; 
+  font-size: 0.875rem;
   font-weight: bold;
-  color: #aaa; 
+  color: #aaa;
   text-transform: uppercase;
 }
 
 .category-value {
   text-align: right;
-  font-size: 1.25rem; 
-  color: #ddd; 
+  font-size: 1.25rem;
+  color: #ddd;
   font-weight: normal;
 }
 .card-header {
