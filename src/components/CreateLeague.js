@@ -12,7 +12,6 @@ const CreateLeague = ({ userId }) => {
         credentials: 'include'
       })
       const data = await response.json()
-      console.log(data)
       setExistingLeagues(data)
     }
 
@@ -49,7 +48,6 @@ const CreateLeague = ({ userId }) => {
       // credentials: 'include'
     })
       .then(response => response.json())
-      .then(data => console.log(data))
       .catch(error => console.log(error))
   }
 

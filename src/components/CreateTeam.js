@@ -17,7 +17,6 @@ const CreateTeam = () => {
         }
       )
       const data = await response.json()
-      console.log(data)
       setExistingTeams(data)
     }
 
@@ -37,7 +36,6 @@ const CreateTeam = () => {
       //for each user, if team matches position in existing teams array
       //increment the count of users per team in same position in userPerTeam Array
       data.forEach(user => {
-        console.log(user)
         existingTeams.forEach(team => {
           if (user.teamId === team.id) {
             setUsersPerTeam(prev => {
@@ -79,7 +77,6 @@ const CreateTeam = () => {
       )
 
       const data = await response.json()
-      console.log(data)
       // Handle success, for example, resetting the form or showing a success message
     } catch (error) {
       console.error('Error creating team:', error)

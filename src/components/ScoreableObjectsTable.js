@@ -13,8 +13,8 @@ const ScoreableObjectsTable = () => {
         `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoreable-objects/`
       )
       const data = await response.json()
-      setScoreableEvents(data)
-      console.log(data)
+      const sortedData = data.sort((a, b) => a.sortOrder - b.sortOrder)
+      setScoreableEvents(sortedData)
     }
 
     fetchScoreableEvents()
@@ -56,6 +56,7 @@ const ScoreableObjectsTable = () => {
           <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Sort Order</th>
             <th>Requires Evidence</th>
             <th>League Multiplier</th>
             <th>Points</th>
@@ -68,6 +69,7 @@ const ScoreableObjectsTable = () => {
             <tr key={event.id}>
               <td>{event.name}</td>
               <td>{event.description}</td>
+              <td>{event.sortOrder}</td>
               <td>{event.requiresEvidence ? 'Yes' : 'No'}</td>
               <td>{event.leagueMultiplier ? 'Yes' : 'No'}</td>
               <td>{event.points}</td>

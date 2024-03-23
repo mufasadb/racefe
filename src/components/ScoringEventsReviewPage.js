@@ -25,7 +25,6 @@ const ScoringEventsReviewPage = () => {
         `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoring-events/approveable/list`
       )
       const data = await response.json()
-      console.log(data)
       setScoringEvents(data)
     }
 

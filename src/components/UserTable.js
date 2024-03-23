@@ -61,7 +61,6 @@ const UserTable = () => {
   }
 
   const handleTeamChange = async (userId, teamId) => {
-    console.log(userId, teamId)
     // Handle team assignment for user
     try {
       const response = await fetch(

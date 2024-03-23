@@ -9,6 +9,7 @@ const CreateScoreableObject = () => {
   const [leagueMultiplier, setLeagueMultiplier] = useState(true)
   const [points, setPoints] = useState(1)
   const [submissionType, setSubmissionType] = useState('account_objective')
+  const [sortOrder, setSortOrder] = useState(0)
   const handleSubmit = async object => {
     object.preventDefault()
     const data = {
@@ -17,7 +18,8 @@ const CreateScoreableObject = () => {
       requires_evidence: requiresEvidence,
       league_multiplier: leagueMultiplier,
       points,
-      submittable_type: submissionType
+      submittable_type: submissionType,
+      sort_order: sortOrder ? sortOrder : 0
     }
 
     try {
@@ -33,7 +35,6 @@ const CreateScoreableObject = () => {
         }
       )
       const res = await response.json()
-      console.log(res)
       if (res.name) {
         window.location.reload()
       }
@@ -65,6 +66,14 @@ const CreateScoreableObject = () => {
             id='description'
             value={description}
             onChange={e => setDescription(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor='sortedOrder'>Sort Order:</label>
+          <textarea
+            id='sortOrder'
+            value={sortOrder}
+            onChange={e => setSortOrder(e.target.value)}
           />
         </div>
         {/* Requires Evidence Checkbox */}

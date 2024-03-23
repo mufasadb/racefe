@@ -94,7 +94,6 @@ const theme = createTheme({
 })
 
 const App = () => {
-  console.log('i first booted')
   const [userId, setuserId] = useState(/* initial player ID */)
   const [teamId, setTeamId] = useState(/* initial team ID */)
   const [isAdmin, setIsAdmin] = useState(/* initial admin status */)
@@ -102,7 +101,6 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    console.log('trying to hit backend')
     // Replace this with your code to fetch the player ID from your backend
     fetch(
       `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/user/`,
@@ -114,11 +112,9 @@ const App = () => {
         if (!res.status === 200) {
           throw new Error(`HTTP error! Status: ${res.status}`)
         }
-        console.log('i got an answer from backend')
         return res.json()
       })
       .then(data => {
-        console.log('im doing something')
 
         if (data) {
           setIsLoggedIn(true)

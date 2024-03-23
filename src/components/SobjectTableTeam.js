@@ -13,16 +13,14 @@ const PublicScoreableObjectsTable = () => {
         `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoreable-objects/`
       )
       const data = await response.json()
-      console.log(data)
       const filteredData = data.filter(
         event =>
           event.submittableType !== 'account_bounty' &&
           event.submittableType !== 'account_objective' &&
           event.submittableType !== 'character_objective'
       )
-      setScoreableEvents(filteredData)
-
-      console.log(data)
+      const sortedData = filteredData.sort((a, b) => a.sortOrder - b.sortOrder)
+      setScoreableEvents(sortedData)
     }
 
     fetchScoreableEvents()

@@ -18,8 +18,8 @@ const PublicScoreableObjectsTable = () => {
           event.submittableType !== 'team_bounty' &&
           event.submittableType !== 'team_objective'
       )
-      console.log(filteredData)
-      setScoreableEvents(filteredData)
+      const sortedData = filteredData.sort((a, b) => a.sortOrder - b.sortOrder)
+      setScoreableEvents(sortedData)
     }
 
     fetchScoreableEvents()

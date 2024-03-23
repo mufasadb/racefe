@@ -13,7 +13,6 @@ const LoginPage = () => {
     )
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data) {
           setIsLoggedIn(true)
         }
@@ -33,7 +32,6 @@ const LoginPage = () => {
     )
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data) {
           setIsLoggedIn(false)
         }

@@ -31,7 +31,6 @@ const CreateCharacter = () => {
     })
     const data = await response.json()
     setUsers(data)
-    console.log(data);
   }
 
   const handleCharacterNameChange = event => {
@@ -58,7 +57,6 @@ const CreateCharacter = () => {
       })
 
       const data = await response.json()
-      console.log(data)
       // Handle success
     } catch (error) {
       console.error('Error creating character:', error)

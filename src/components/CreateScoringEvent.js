@@ -6,7 +6,6 @@ const ScoringSubmission = () => {
   const { userId, teamId, isAdmin, isLoggedIn, isTeamLeader } =
     React.useContext(UserContext)
 
-  console.log(userId, teamId, isAdmin, isLoggedIn, isTeamLeader)
   // console.log(userId)
   const [scoreableObjectID, setScoreableObjectID] = useState('')
   const [leagueID, setLeagueID] = useState('')
@@ -115,10 +114,7 @@ const ScoringSubmission = () => {
   }, [teamId, userId])
 
   const handleScoreableChange = e => {
-    console.log(e.target.value)
-    console.log(scoreableObjects)
     const selected = scoreableObjects.find(obj => obj.id == e.target.value)
-    console.log(selected)
     setSelectedScoreable(selected || {})
     setScoreableObjectID(e.target.value)
   }
@@ -142,7 +138,6 @@ const ScoringSubmission = () => {
       is_approved: isAdmin ? isApproved : false // Only set if admin
     }
 
-    console.log(data)
     // Replace with your API endpoint
     fetch(
       `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoring-events/`,
@@ -168,7 +163,6 @@ const ScoringSubmission = () => {
         window.location.reload()
       })
 
-      // .then(data => console.log(data))
       .catch(error => console.log(error))
   }
 
