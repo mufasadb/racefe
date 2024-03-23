@@ -42,10 +42,7 @@ const TeamComparison = () => {
       : value === Math.max(...valuesArray)
 
   return (
-    <Paper elevation={3} sx={{ padding: 2 }}>
-      <Typography variant='h6' gutterBottom component='div'>
-        Team Comparison
-      </Typography>
+    <div>
       <Grid container spacing={2}>
         {teamData.map(team => (
           <Grid item xs={12} md={6} key={team.teamName}>
@@ -169,7 +166,7 @@ const TeamComparison = () => {
           </Grid>
         ))}
       </Grid>
-    </Paper>
+    </div>
   )
 }
 

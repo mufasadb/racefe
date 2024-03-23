@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box, Paper, ThemeProvider, createTheme } from '@mui/material'
 import UserContext from '../context/UserContext'
-import TeamComparison from './TeamComparison'
-import LeaderBoard from './LeaderBoard'
-import AvailableScoreableObjects from './AvailableScoreableObjects'
+import SobjectTableAccount from './SobjectTableAccount'
+import SobjectTableTeam from './SobjectTableTeam'
+// import AvailableScoreableObjects from './AvailableScoreableObjects'
 
-const HomePage = () => {
+const AllScoreablesList = () => {
   const { userId, teamId, isAdmin, isLoggedIn } = React.useContext(UserContext)
 
   return (
@@ -14,27 +14,20 @@ const HomePage = () => {
         {/* Top Section */}
         <Box display='flex' justifyContent='space-between'>
           {/* Top Left - Player Leaderboard */}
-          <Box width='50%' p={2}>
-              <LeaderBoard />
-          </Box>
-
-          {/* Top Right - Team Comparison */}
-          <Box width='50%' p={2}>
-              {' '}
-              <TeamComparison />
+          <Box mt={4} p={2}>
+            <h2>Per Account Objectives and Bounties</h2>
+            <SobjectTableAccount />
           </Box>
         </Box>
 
         {/* Bottom Section - Available Bounties */}
         <Box mt={4} p={2}>
-            {' '}
-            <AvailableScoreableObjects />
-            {/* <LeaderBoard/> */}
-            {/* <Submittables /> */}
+          <h2>Per Team Objectives and bounties</h2>
+          <SobjectTableTeam />
         </Box>
       </Box>
     </div>
   )
 }
 
-export default HomePage
+export default AllScoreablesList

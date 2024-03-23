@@ -15,8 +15,9 @@ import CreateScoringEvent from './components/CreateScoringEvent'
 import LoginPage from './components/LoginPage'
 import './App.css'
 import UserContext from './context/UserContext'
+import ScoringEventsReviewPage from './components/ScoringEventsReviewPage'
 import ScoringEventsTable from './components/ScoringEventsTable'
-
+import AllScoreablesList from './components/AllScoreablesList'
 const LoggedInRoute = ({ component: Component, ...rest }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
   useEffect(() => {
@@ -31,12 +32,15 @@ const LoggedInRoute = ({ component: Component, ...rest }) => {
         setIsAuthenticated(data)
         if (!data) {
           // Redirect the user to the Discord login page
-          let baseURL = 'https://discord.com/api/oauth2/authorize';
-          let queryParams = `?client_id=1093461191705239562&redirect_uri=${encodeURIComponent(process.env.REACT_APP_BACKEND_URL + process.env.REACT_APP_BACKEND_PORT + '/auth/discord/callback')}&response_type=code&scope=identify email`;
-          
-          let discordURL = baseURL + queryParams;
-          window.location.href = discordURL;
-          
+          let baseURL = 'https://discord.com/api/oauth2/authorize'
+          let queryParams = `?client_id=1093461191705239562&redirect_uri=${encodeURIComponent(
+            process.env.REACT_APP_BACKEND_URL +
+              process.env.REACT_APP_BACKEND_PORT +
+              '/auth/discord/callback'
+          )}&response_type=code&scope=identify email`
+
+          let discordURL = baseURL + queryParams
+          window.location.href = discordURL
         }
       })
   }, [])
@@ -73,8 +77,7 @@ const AdminOnlyRoute = ({ component: Component, ...rest }) => {
         }
         if (!data) {
           // Redirect the user to the Discord login page
-          window.location.href =
-            `${process.env.REACT_APP_FRONTEND_URL}${process.env.REACT_APP_FRONTEND_PORT}/`
+          window.location.href = `${process.env.REACT_APP_FRONTEND_URL}${process.env.REACT_APP_FRONTEND_PORT}/`
         }
       })
   }, [])
@@ -141,7 +144,7 @@ const App = () => {
             <Switch>
               <Route path='/' component={HomePage} />
               <AdminOnlyRoute path='/CreateLeague' component={CreateLeague} />
-              <LoggedInRoute
+              <AdminOnlyRoute
                 path='/CreateCharacter'
                 component={CreateCharacter}
               />
@@ -156,12 +159,20 @@ const App = () => {
                 path='/CreateScoringEvent'
                 component={CreateScoringEvent}
               />
+              <AdminOnlyRoute
+                path='/ScoringEventsReviewPage'
+                component={ScoringEventsReviewPage}
+              />
               {/* <AdminOnlyRoute path='/player/:userId' component={PlayerData} /> */}
               <LoggedInRoute path='/playerData' component={PlayerData} />
               <LoggedInRoute path='/login' component={LoginPage} />
               <AdminOnlyRoute
-                path='/scoringEvents'
+                path='/ScoringEventsTable'
                 component={ScoringEventsTable}
+              />
+              <Route
+                path='/AllScoreablesList'
+                component={AllScoreablesList}
               />
             </Switch>
           </Container>

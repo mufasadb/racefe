@@ -172,16 +172,18 @@ const ScoringSubmission = () => {
       .catch(error => console.log(error))
   }
 
-  const convertToHumanReadable = scoreableType => {
+  const convertTypeToHumanReadable = scoreableType => {
     switch (scoreableType) {
-      case 'player_bounty':
-        return 'Player Bounty'
+      case 'character_objective':
+        return 'Character Objective'
+      case 'account_objective':
+        return 'Account Objective'
+      case 'team_objective':
+        return 'Team Objective'
       case 'team_bounty':
         return 'Team Bounty'
-      case 'league_bounty':
-        return 'League Bounty'
-      case 'server_bounty':
-        return 'Server Bounty'
+      case 'account_bounty':
+        return 'Account Bounty'
       default:
         return 'Unknown'
     }
@@ -355,7 +357,7 @@ const ScoringSubmission = () => {
                 fontWeight: 'bold'
               }}
             >
-              Type: {convertToHumanReadable(selectedScoreable.submittableType)}
+              Type: {convertTypeToHumanReadable(selectedScoreable.submittableType)}
             </span>
           </>
         ) : (

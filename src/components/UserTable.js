@@ -28,7 +28,9 @@ const UserTable = () => {
       )
       if (response.ok) {
         const data = await response.json()
-        setUsers(data)
+        //sort data by teamId
+        const sortedData = data.sort((a, b) => a.teamId - b.teamId)
+        setUsers(sortedData)
       } else {
         // Handle HTTP errors
         console.error('HTTP Error: ', response.statusText)

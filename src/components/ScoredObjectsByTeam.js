@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import UserContext from '../context/UserContext'
 
-const ScoredObjects = () => {
+const ScoredObjectsByTeam = () => {
   const { userId, teamId, isAdmin, isLoggedIn } = React.useContext(UserContext)
 
   const [scoreableObjects, setScoreableObjects] = useState([])
@@ -25,12 +25,11 @@ const ScoredObjects = () => {
         fetch(
           `${process.env.REACT_APP_BACKEND_URL}${
             process.env.REACT_APP_BACKEND_PORT
-          }/scoring-events/by-user/${userId ? userId : 1}`
+          }/scoring-events/by-team/${teamId ? teamId : 1}`
         )
       ])
       const data = await Promise.all(responses.map(res => res.json()))
       setScoreableObjects(data.flat())
-      
     } catch (error) {
       console.error(error)
     }
@@ -52,6 +51,13 @@ const ScoredObjects = () => {
       return 'Just now'
     }
   }
+  const calculateTotalPoints = event => {
+    let totalPoints = event.scoreableObject.leagueMultiplier
+      ? event.scoreableObject.points * event.league.scoreMultiplier
+      : event.scoreableObject.points
+    //convert total points to a string and return it
+    return totalPoints.toString()
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -71,9 +77,13 @@ const ScoredObjects = () => {
             <TableRow key={index}>
               <TableCell>{object.scoreableObject.name}</TableCell>
               <TableCell>{object.scoreableObject.description}</TableCell>
-              <TableCell>{object.pointTotal}</TableCell>
-              <TableCell>{object.createdAt ? timeAgo(new Date(object.createdAt)):''}</TableCell>
-              <TableCell>{object.isApproved? "Approved" : "Not Yet Approved"}</TableCell>
+              <TableCell>{calculateTotalPoints(object)}</TableCell>
+              <TableCell>
+                {object.createdAt ? timeAgo(new Date(object.createdAt)) : ''}
+              </TableCell>
+              <TableCell>
+                {object.isApproved ? 'Approved' : 'Not Yet Approved'}
+              </TableCell>
               {/* Render other object properties as needed */}
             </TableRow>
           ))}
@@ -83,4 +93,4 @@ const ScoredObjects = () => {
   )
 }
 
-export default ScoredObjects
+export default ScoredObjectsByTeam

@@ -11,14 +11,17 @@ const Header = ({ isLoggedIn, isAdmin }) => {
         {isLoggedIn && (
           <>
             <li>
-              <Link to='/PlayerData'>My Page</Link>
+              <Link to='/PlayerData'>Submissions</Link>
             </li>
 
             <li>
-              <Link to='/CreateScoringEvent'>Submit Points</Link>
+              <Link to='/CreateScoringEvent'>Submit Objectives</Link>
             </li>
             <li>
               <Link to='/Users'>Users</Link>
+            </li>
+            <li>
+              <Link to='/AllScoreablesList'>Objectives List</Link>
             </li>
             {isAdmin && (
               <>
@@ -28,16 +31,21 @@ const Header = ({ isLoggedIn, isAdmin }) => {
                 <li>
                   <Link to='/CreateTeam'>Create Team</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to='/CreateCharacter'>Create Character</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to='/CreateScoreableObject'>
                     Create Scoreable Event
                   </Link>
                 </li>
                 <li>
-                  <Link to='/scoringEvents'>Review Scored Events</Link>
+                  <Link to='/ScoringEventsReviewPage'>
+                    Review Scored Events
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/ScoringEventsTable'>List All Scored Events</Link>
                 </li>
               </>
             )}

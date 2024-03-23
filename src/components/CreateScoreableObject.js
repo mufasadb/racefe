@@ -8,7 +8,7 @@ const CreateScoreableObject = () => {
   const [requiresEvidence, setRequiresEvidence] = useState(true)
   const [leagueMultiplier, setLeagueMultiplier] = useState(true)
   const [points, setPoints] = useState(1)
-  const [submissionType, setSubmissionType] = useState('player_bounty')
+  const [submissionType, setSubmissionType] = useState('account_objective')
   const handleSubmit = async object => {
     object.preventDefault()
     const data = {
@@ -98,11 +98,11 @@ const CreateScoreableObject = () => {
           />
         </div>
         <select onChange={e => setSubmissionType(e.target.value)}>
-          <option value='character'>Character</option>
-          <option value='player'>Player</option>
-          <option value='player_bounty'>Player Bounty</option>
+          <option value='character_objective'>Character Objective</option>
+          <option value='account_objective'>Account Objective</option>
+          <option value='account_bounty'>Account Bounty</option>
           <option value='team_bounty'>Team Bounty</option>
-          <option value='server_bounty'>Server</option>
+          <option value='team_objective'>Team Objective</option>
         </select>
         <div></div>
         {/* Submit button */}

@@ -13,7 +13,7 @@ import {
 import { Check as CheckIcon, Delete as DeleteIcon } from '@mui/icons-material'
 import UserContext from '../context/UserContext'
 
-const ScoringEventsTable = () => {
+const ScoringEventsReviewPage = () => {
   const { userId, teamId, isAdmin, isLoggedIn } = React.useContext(UserContext)
   const [scoringEvents, setScoringEvents] = useState([])
   const [order, setOrder] = useState('asc')
@@ -22,9 +22,10 @@ const ScoringEventsTable = () => {
   useEffect(() => {
     const fetchScoringEvents = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoring-events/`
+        `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoring-events/approveable/list`
       )
       const data = await response.json()
+      console.log(data)
       setScoringEvents(data)
     }
 
@@ -43,14 +44,6 @@ const ScoringEventsTable = () => {
     if (urlRegex.test(url) && url.startsWith('https://')) {
       return true
     }
-  }
-
-  const calculateTotalPoints = event => {
-    let totalPoints = event.scoreableObject.leagueMultiplier
-      ? event.scoreableObject.points * event.league.scoreMultiplier
-      : event.scoreableObject.points
-    //convert total points to a string and return it
-    return totalPoints.toString()
   }
 
   // Approval and deletion handlers
@@ -81,12 +74,19 @@ const ScoringEventsTable = () => {
       window.location.reload()
     })
   }
+
+  const calculateTotalPoints = event => {
+    let totalPoints = event.scoreableObject.leagueMultiplier
+      ? event.scoreableObject.points * event.league.scoreMultiplier
+      : event.scoreableObject.points
+    //convert total points to a string and return it
+    return totalPoints.toString()
+  }
   const columns = [
     { id: 'username', label: 'Player Username', minWidth: 170 },
-    { id: 'teamName', label: 'Team Name', minWidth: 170 },
     { id: 'scoreableName', label: 'Scoreable Object', minWidth: 100 },
     { id: 'timestamp', label: 'Timestamp', minWidth: 170 },
-    { id: 'isApproved', label: 'Approved', minWidth: 170 },
+    { id: 'leagueName', label: 'League', minWidth: 170 },
     { id: 'evidenceURL', label: 'Evidence URL', minWidth: 170 },
     { id: 'pointTotal', label: 'Points', minWidth: 170 }
   ]
@@ -113,13 +113,11 @@ const ScoringEventsTable = () => {
         <TableBody>
           {scoringEvents.map(event => (
             <TableRow key={event.id}>
-              <TableCell>
-                {event.user.username ? event.user.username : ''}
-              </TableCell>
-              <TableCell>{event.team.name ? event.team.name : ''}</TableCell>
+              <TableCell>{event.user.username}</TableCell>
               <TableCell>{event.scoreableObject.name}</TableCell>
               <TableCell>{event.createdAt}</TableCell>
-              <TableCell>{event.isApproved.toString()}</TableCell>
+              <TableCell>{event.league.name}</TableCell>
+              {/* <TableCell>{event.is_approved}</TableCell> */}
               <TableCell>
                 {isHttpsUrl(event.evidenceUrl) ? (
                   <a
@@ -156,4 +154,4 @@ const ScoringEventsTable = () => {
   )
 }
 
-export default ScoringEventsTable
+export default ScoringEventsReviewPage

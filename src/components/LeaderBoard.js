@@ -26,19 +26,21 @@ const LeaderBoard = () => {
   }, [])
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer >
       <Table aria-label='Leaderboard Table'>
         <TableHead>
           <TableRow>
+            <TableCell>Rank</TableCell>
             <TableCell>Username</TableCell>
-            <TableCell>Team Name</TableCell>
+            <TableCell>Team</TableCell>
             <TableCell>Score</TableCell>
-            <TableCell>Submission Count</TableCell>
+            {/* <TableCell>Submission Count</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
           {leaderboardData.map((user, index) => (
-            <TableRow key={index}>
+            <TableRow key={index }>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{user.username}</TableCell>
               <TableCell>
                 <Chip
@@ -47,7 +49,7 @@ const LeaderBoard = () => {
                 />
               </TableCell>
               <TableCell>{user.score}</TableCell>
-              <TableCell>{user.scoredEventsCount}</TableCell>
+              {/* <TableCell>{user.scoredEventsCount}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>
