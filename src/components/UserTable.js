@@ -139,9 +139,9 @@ const UserTable = () => {
       <table>
         <thead>
           <tr>
-            <th>Username</th>
+            <th>Account</th>
             <th>Team</th>
-            <th>Actions</th>
+            <th>Role</th>
             {isAdmin && <th>Delete</th>}
           </tr>
         </thead>
@@ -178,7 +178,7 @@ const UserTable = () => {
               </td>
               {isAdmin && (
                 <td>
-                  <button onClick={() => handleDeleteUser(user.id)}>
+                  <button style={{backgroundColor:'red'}} onClick={() => handleDeleteUser(user.id)}>
                     <DeleteIcon />
                   </button>
                 </td>

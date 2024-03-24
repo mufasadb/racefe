@@ -82,13 +82,13 @@ const ScoringEventsTable = () => {
     })
   }
   const columns = [
-    { id: 'username', label: 'Player Username', minWidth: 170 },
+    { id: 'username', label: 'Account', minWidth: 170 },
     { id: 'teamName', label: 'Team Name', minWidth: 170 },
-    { id: 'scoreableName', label: 'Scoreable Object', minWidth: 100 },
+    { id: 'scoreableName', label: 'Submission', minWidth: 100 },
     { id: 'timestamp', label: 'Timestamp', minWidth: 170 },
     { id: 'isApproved', label: 'Approved', minWidth: 170 },
     { id: 'evidenceURL', label: 'Evidence URL', minWidth: 170 },
-    { id: 'pointTotal', label: 'Points', minWidth: 170 }
+    { id: 'pointTotal', label: 'Score', minWidth: 170 }
   ]
 
   return (

@@ -74,7 +74,7 @@ const TeamComparison = () => {
               </Chip>
               <div className='category-row'>
                 <Typography className='category-label'>
-                  Total Points:
+                  Score:
                 </Typography>
                 <Typography
                   className={`category-value ${

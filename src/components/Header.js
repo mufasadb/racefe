@@ -18,7 +18,7 @@ const Header = ({ isLoggedIn, isAdmin }) => {
               <Link to='/CreateScoringEvent'>Submit Objectives</Link>
             </li>
             <li>
-              <Link to='/Users'>Users</Link>
+              <Link to='/Users'>Accounts</Link>
             </li>
             <li>
               <Link to='/AllScoreablesList'>Objectives List</Link>
@@ -36,16 +36,16 @@ const Header = ({ isLoggedIn, isAdmin }) => {
                 </li> */}
                 <li>
                   <Link to='/CreateScoreableObject'>
-                    Create Scoreable Event
+                    Create Submission Option
                   </Link>
                 </li>
                 <li>
                   <Link to='/ScoringEventsReviewPage'>
-                    Review Scored Events
+                    Review Submissions
                   </Link>
                 </li>
                 <li>
-                  <Link to='/ScoringEventsTable'>List All Scored Events</Link>
+                  <Link to='/ScoringEventsTable'>List All Submissions</Link>
                 </li>
               </>
             )}

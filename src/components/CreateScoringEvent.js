@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import UserContext from '../context/UserContext'
+import { Popover, Paper, Typography } from '@mui/material'
+import InfoIcon from '@mui/icons-material/Info'
+import { Info } from '@mui/icons-material'
 
 const ScoringSubmission = () => {
   const { userId, teamId, isAdmin, isLoggedIn, isTeamLeader } =
@@ -19,6 +22,28 @@ const ScoringSubmission = () => {
   const [selectedScoreable, setSelectedScoreable] = useState({})
   const [users, setUsers] = useState([])
   const [teams, setTeams] = useState([])
+  const [showPostURLs, setShowPostURLs] = useState(false)
+
+  const [popoverData, setPopoverData] = useState({
+    anchorEl: null,
+    content: ''
+  })
+
+  const handlePopoverOpen = (event, description) => {
+    setPopoverData({
+      anchorEl: event.currentTarget,
+      content: description
+    })
+  }
+
+  const handlePopoverClose = () => {
+    setPopoverData({
+      anchorEl: null,
+      content: ''
+    })
+  }
+
+  const open = Boolean(popoverData.anchorEl)
   // Fetch scoreable objects
   useEffect(() => {
     const fetchScoreableObjects = async () => {
@@ -182,12 +207,28 @@ const ScoringSubmission = () => {
         return 'Unknown'
     }
   }
+  const submitTypeExplenation = type => {
+    switch (type) {
+      case 'character_objective':
+        return 'This objective can be completed once by each character'
+      case 'account_objective':
+        return 'This objective can be completed once by each account'
+      case 'team_objective':
+        return 'This objective can be completed once by each team'
+      case 'team_bounty':
+        return 'This bounty can only be claimed by a single team'
+      case 'account_bounty':
+        return 'This bounty can only be claimed by a single player'
+      default:
+        return 'Unknown'
+    }
+  }
 
   return (
     <div style={{ display: 'flex' }}>
       <form onSubmit={handleSubmit} style={{ flex: 1 }}>
         <div className='form-field'>
-          <label htmlFor='scoreableObjectID'>Select your scoreable:</label>
+          <label htmlFor='scoreableObjectID'>Select objective:</label>
           <select
             id='scoreableObjectID'
             value={scoreableObjectID}
@@ -195,7 +236,7 @@ const ScoringSubmission = () => {
             required
           >
             <option key='' value=''>
-              Select a scoreable
+              Select an objective
             </option>
 
             {scoreableObjects.map(obj => (
@@ -242,7 +283,7 @@ const ScoringSubmission = () => {
         </div>
 
         <div className='form-field'>
-          <label htmlFor='userID'>User:</label>
+          <label htmlFor='userID'>Account:</label>
           <select
             id='userID'
             value={userID || userId} // Defaults to context userId if userID state is not set
@@ -266,20 +307,65 @@ const ScoringSubmission = () => {
           onChange={e => setCharacterID(e.target.value)}
         />
       </div> */}
+        {selectedScoreable.requiresEvidence && (
+          <div className='form-field'>
+            <label htmlFor='evidenceURL'>
+              Evidence URL:
+              <InfoIcon
+                aria-owns={open ? 'mouse-over-popover' : undefined}
+                aria-haspopup='true'
+                onMouseEnter={e => {
+                  {
+                    handlePopoverOpen(
+                      e,
+                      "Upload a screenshot or video of the objective's completion we recommend https://imgur.com/upload for images and https://studio.youtube.com/ for videos, or simply the discord link to the ace media post"
+                    )
+                  }
+                  {
+                    setShowPostURLs(true)
+                  }
+                }}
+                onMouseLeave={handlePopoverClose}
+              />
+            </label>
+            <input
+              id='evidenceURL'
+              type='text'
+              value={evidenceURL}
+              onChange={e => setEvidenceURL(e.target.value)}
+            />
+          </div>
+        )}
 
-        <div className='form-field'>
-          <label htmlFor='evidenceURL'>Evidence URL:</label>
-          <input
-            id='evidenceURL'
-            type='text'
-            value={evidenceURL}
-            onChange={e => setEvidenceURL(e.target.value)}
-          />
-        </div>
+        {showPostURLs && (
+          <div>
+            <span>
+              {' '}
+              <a
+                style={{ color: 'white' }}
+                target='_'
+                href='https://imgur.com/upload'
+              >
+                Imgur
+              </a>{' '}
+              and{' '}
+              <a
+                style={{ color: 'white' }}
+                target='_'
+                href='https://studio.youtube.com'
+              >
+                Youtube
+              </a>{' '}
+              <br />
+            </span>
+            <br />
+            <br />
+          </div>
+        )}
 
         {isAdmin && (
           <div>
-            <label htmlFor='isApproved'>Is Approved:</label>
+            <label htmlFor='isApproved'>Set as Approved (admin only):</label>
             <input
               id='isApproved'
               type='checkbox'
@@ -289,7 +375,7 @@ const ScoringSubmission = () => {
           </div>
         )}
 
-        <button type='submit'>Submit Scoring</button>
+        <button type='submit'>Submit Objective</button>
       </form>
 
       <div
@@ -312,7 +398,7 @@ const ScoringSubmission = () => {
             <h2
               style={{
                 margin: 0,
-                backgroundColor: '#007bff', // Slightly lighter blue for the header
+                backgroundColor: '#555', // Slightly lighter blue for the header
                 color: 'white',
                 padding: '10px',
                 borderRadius: '8px',
@@ -339,8 +425,18 @@ const ScoringSubmission = () => {
                 padding: '5px 10px',
                 fontWeight: 'bold'
               }}
+              aria-owns={open ? 'mouse-over-popover' : undefined}
+              aria-haspopup='true'
+              onMouseEnter={e =>
+                handlePopoverOpen(
+                  e,
+                  "Does the League's Score Multiplier apply or will the score be just the value here"
+                )
+              }
+              onMouseLeave={handlePopoverClose}
             >
-              Multiplier: {selectedScoreable.leagueMultiplier ? 'yes' : 'no'}
+              Multiplied By League?{' '}
+              {selectedScoreable.leagueMultiplier ? 'Yes' : 'No'}
             </span>
             <span
               style={{
@@ -350,15 +446,56 @@ const ScoringSubmission = () => {
                 padding: '5px 10px',
                 fontWeight: 'bold'
               }}
+              aria-owns={open ? 'mouse-over-popover' : undefined}
+              aria-haspopup='true'
+              onMouseEnter={e =>
+                handlePopoverOpen(
+                  e,
+                  submitTypeExplenation(selectedScoreable.submittableType)
+                )
+              }
+              onMouseLeave={handlePopoverClose}
             >
-              Type: {convertTypeToHumanReadable(selectedScoreable.submittableType)}
+              submission Type:{' '}
+              {convertTypeToHumanReadable(selectedScoreable.submittableType)}
             </span>
           </>
         ) : (
-          <p style={{ textAlign: 'center' }}>No bounty selected</p>
+          <p style={{ textAlign: 'center' }}>No Objective Selected</p>
         )}
       </div>
+      <PopoverComponent
+        anchorEl={popoverData.anchorEl}
+        open={open}
+        onClose={handlePopoverClose}
+        content={popoverData.content}
+      />
     </div>
+  )
+}
+
+const PopoverComponent = ({ anchorEl, open, onClose, content }) => {
+  return (
+    <Popover
+      id='mouse-over-popover'
+      sx={{ pointerEvents: 'none' }}
+      anchorEl={anchorEl}
+      open={open}
+      onClose={onClose}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left'
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'left'
+      }}
+      disableRestoreFocus
+    >
+      <Paper elevation={3} style={{ padding: '10px' }}>
+        <Typography>{content}</Typography>
+      </Paper>
+    </Popover>
   )
 }
 

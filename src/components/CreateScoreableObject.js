@@ -19,7 +19,7 @@ const CreateScoreableObject = () => {
       league_multiplier: leagueMultiplier,
       points,
       submittable_type: submissionType,
-      sort_order: sortOrder ? sortOrder : 0
+      sort_order: sortOrder ? sortOrder : 50
     }
 
     try {
@@ -48,10 +48,12 @@ const CreateScoreableObject = () => {
     <div>
       <h1>Create a new Scoreable Object</h1>
       <ScoreableObjectsTable />
+      <br />
+      <br />
       <form onSubmit={handleSubmit}>
         {/* Name input */}
         <div>
-          <label htmlFor='name'>Object Name:</label>
+          <label htmlFor='name'>Subbmission Option Name:</label>
           <input
             type='text'
             id='name'
@@ -70,7 +72,8 @@ const CreateScoreableObject = () => {
         </div>
         <div>
           <label htmlFor='sortedOrder'>Sort Order:</label>
-          <textarea
+          <input
+            type='text'
             id='sortOrder'
             value={sortOrder}
             onChange={e => setSortOrder(e.target.value)}
@@ -106,7 +109,10 @@ const CreateScoreableObject = () => {
             onChange={e => setPoints(parseInt(e.target.value, 10))}
           />
         </div>
-        <select onChange={e => setSubmissionType(e.target.value)}>
+        <select
+          value={submissionType}
+          onChange={e => setSubmissionType(e.target.value)}
+        >
           <option value='character_objective'>Character Objective</option>
           <option value='account_objective'>Account Objective</option>
           <option value='account_bounty'>Account Bounty</option>

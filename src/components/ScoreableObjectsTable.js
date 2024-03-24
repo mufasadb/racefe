@@ -32,7 +32,9 @@ const ScoreableObjectsTable = () => {
       if (res.status === 200) {
         window.location.reload()
       } else {
-        window.alert(`There was an error deleting the scoreable object /n ${res.message}`)
+        window.alert(
+          `There was an error deleting the scoreable object /n ${res.message}`
+        )
       }
     } catch (error) {
       console.log(error)
@@ -46,6 +48,22 @@ const ScoreableObjectsTable = () => {
     indexOfLastEvent
   )
 
+  const convertTypeToHumanReadable = scoreableType => {
+    switch (scoreableType) {
+      case 'character_objective':
+        return 'Character Objective'
+      case 'account_objective':
+        return 'Account Objective'
+      case 'team_objective':
+        return 'Team Objective'
+      case 'team_bounty':
+        return 'Team Bounty'
+      case 'account_bounty':
+        return 'Account Bounty'
+      default:
+        return 'Unknown'
+    }
+  }
   const paginate = pageNumber => setCurrentPage(pageNumber)
 
   return (
@@ -60,7 +78,7 @@ const ScoreableObjectsTable = () => {
             <th>Requires Evidence</th>
             <th>League Multiplier</th>
             <th>Points</th>
-            <th>submittable_type</th>
+            <th>Submission Type</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -73,7 +91,7 @@ const ScoreableObjectsTable = () => {
               <td>{event.requiresEvidence ? 'Yes' : 'No'}</td>
               <td>{event.leagueMultiplier ? 'Yes' : 'No'}</td>
               <td>{event.points}</td>
-              <td>{event.submittableType}</td>
+              <td>{convertTypeToHumanReadable(event.submittableType)}</td>
               <td>
                 <IconButton
                   onClick={() => handleDelete(event.id)}

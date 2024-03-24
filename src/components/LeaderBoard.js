@@ -31,7 +31,7 @@ const LeaderBoard = () => {
         <TableHead>
           <TableRow>
             <TableCell>Rank</TableCell>
-            <TableCell>Username</TableCell>
+            <TableCell>Account</TableCell>
             <TableCell>Team</TableCell>
             <TableCell>Score</TableCell>
             {/* <TableCell>Submission Count</TableCell> */}

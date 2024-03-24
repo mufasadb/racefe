@@ -82,12 +82,12 @@ const ScoringEventsReviewPage = () => {
     return totalPoints.toString()
   }
   const columns = [
-    { id: 'username', label: 'Player Username', minWidth: 170 },
-    { id: 'scoreableName', label: 'Scoreable Object', minWidth: 100 },
+    { id: 'username', label: 'Account', minWidth: 170 },
+    { id: 'scoreableName', label: 'Submission', minWidth: 100 },
     { id: 'timestamp', label: 'Timestamp', minWidth: 170 },
     { id: 'leagueName', label: 'League', minWidth: 170 },
     { id: 'evidenceURL', label: 'Evidence URL', minWidth: 170 },
-    { id: 'pointTotal', label: 'Points', minWidth: 170 }
+    { id: 'pointTotal', label: 'Score', minWidth: 170 }
   ]
 
   return (
