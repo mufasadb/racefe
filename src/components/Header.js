@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'wouter'
+import Typography from '@mui/material/Typography'
 
 const Header = ({ isLoggedIn, isAdmin }) => {
   return (
     <nav>
+
       <ul>
         <li>
           <Link to='/'>Home</Link>
@@ -40,9 +42,7 @@ const Header = ({ isLoggedIn, isAdmin }) => {
                   </Link>
                 </li>
                 <li>
-                  <Link to='/ScoringEventsReviewPage'>
-                    Review Submissions
-                  </Link>
+                  <Link to='/ScoringEventsReviewPage'>Review Submissions</Link>
                 </li>
                 <li>
                   <Link to='/ScoringEventsTable'>List All Submissions</Link>

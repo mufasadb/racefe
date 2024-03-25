@@ -44,6 +44,7 @@ const CreateScoreableObject = () => {
     }
   }
 
+  
   return (
     <div>
       <h1>Create a new Scoreable Object</h1>

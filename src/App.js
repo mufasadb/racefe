@@ -115,7 +115,6 @@ const App = () => {
         return res.json()
       })
       .then(data => {
-
         if (data) {
           setIsLoggedIn(true)
           setuserId(data.id)
@@ -134,6 +133,13 @@ const App = () => {
     >
       <ThemeProvider theme={theme}>
         <div className='App'>
+          <div style={{ justifyContent: 'center' }}>
+            <img
+              src='/ace_header.png'
+              alt='Ace Header'
+              style={{ maxWidth: '100%', height: '10em' }}
+            />
+          </div>
           <Header isLoggedIn={isLoggedIn} isAdmin={isAdmin} />{' '}
           {/* Pass the player ID to the Header component */}
           <Container>
@@ -166,10 +172,7 @@ const App = () => {
                 path='/ScoringEventsTable'
                 component={ScoringEventsTable}
               />
-              <Route
-                path='/AllScoreablesList'
-                component={AllScoreablesList}
-              />
+              <Route path='/AllScoreablesList' component={AllScoreablesList} />
             </Switch>
           </Container>
         </div>

@@ -11,6 +11,7 @@ import {
   Popover
 } from '@mui/material'
 import UserContext from '../context/UserContext'
+import { ArrowUpward, ArrowDownward } from '@mui/icons-material'
 
 const AvailableScoreableObjects = () => {
   const { userId, teamId, isAdmin, isLoggedIn } = React.useContext(UserContext)
@@ -18,6 +19,34 @@ const AvailableScoreableObjects = () => {
     anchorEl: null,
     content: ''
   })
+  const [sortField, setSortField] = useState('sortOrder')
+  const [sortDirection, setSortDirection] = useState('asc') // or 'desc'
+
+  const sortData = (field, data, direction) => {
+    console.log(data)
+    const sortedData = [...data].sort((a, b) => {
+      if (a[field] < b[field]) {
+        return direction === 'asc' ? -1 : 1
+      }
+      if (a[field] > b[field]) {
+        return direction === 'asc' ? 1 : -1
+      }
+      return 0
+    })
+    return sortedData
+  }
+
+  const handleSort = field => {
+    const isAsc = sortField === field && sortDirection === 'asc'
+    const isDesc = sortField === field && sortDirection === 'desc'
+    if (isDesc) {
+      setSortField('sortOrder')
+      setSortDirection('asc')
+      return
+    }
+    setSortField(field)
+    setSortDirection(isAsc ? 'desc' : 'asc')
+  }
 
   const handlePopoverOpen = (event, description) => {
     setPopoverData({
@@ -89,32 +118,66 @@ const AvailableScoreableObjects = () => {
         <Table aria-label='Available Scoreable Objects'>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Points</TableCell>
-              <TableCell>Type</TableCell>
-              {/* Add other relevant columns as needed */}
+              <TableCell onClick={() => handleSort('name')}>
+                Name
+                {sortField === 'name' &&
+                  (sortDirection === 'asc' ? (
+                    <ArrowUpward />
+                  ) : (
+                    <ArrowDownward />
+                  ))}
+              </TableCell>
+              <TableCell onClick={() => handleSort('description')}>
+                Description
+                {sortField === 'description' &&
+                  (sortDirection === 'asc' ? (
+                    <ArrowUpward />
+                  ) : (
+                    <ArrowDownward />
+                  ))}
+              </TableCell>
+              <TableCell onClick={() => handleSort('points')}>
+                Points
+                {sortField === 'points' &&
+                  (sortDirection === 'asc' ? (
+                    <ArrowUpward />
+                  ) : (
+                    <ArrowDownward />
+                  ))}
+              </TableCell>
+              <TableCell onClick={() => handleSort('submittableType')}>
+                Type
+                {/* Add other relevant columns as needed */}
+                {sortField === 'submittableType' &&
+                  (sortDirection === 'asc' ? (
+                    <ArrowUpward />
+                  ) : (
+                    <ArrowDownward />
+                  ))}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {scoreableObjects.map((object, index) => (
-              <TableRow key={index}>
-                <TableCell>{object.name}</TableCell>
-                <TableCell
-                  aria-owns={open ? 'mouse-over-popover' : undefined}
-                  aria-haspopup='true'
-                  onMouseEnter={e => handlePopoverOpen(e, object.description)}
-                  onMouseLeave={handlePopoverClose}
-                >
-                  {trimDescription(object.description)}
-                </TableCell>
-                <TableCell>{object.points}</TableCell>
-                <TableCell>
-                  {convertTypeToHumanReadable(object.submittableType)}
-                </TableCell>
-                {/* Render other object properties as needed */}
-              </TableRow>
-            ))}
+            {sortData(sortField, scoreableObjects, sortDirection).map(
+              (object, index) => (
+                <TableRow key={index}>
+                  <TableCell>{object.name}</TableCell>
+                  <TableCell
+                    aria-owns={open ? 'mouse-over-popover' : undefined}
+                    aria-haspopup='true'
+                    onMouseEnter={e => handlePopoverOpen(e, object.description)}
+                    onMouseLeave={handlePopoverClose}
+                  >
+                    {trimDescription(object.description)}
+                  </TableCell>
+                  <TableCell>{object.points}</TableCell>
+                  <TableCell>
+                    {convertTypeToHumanReadable(object.submittableType)}
+                  </TableCell>
+                  {/* Render other object properties as needed */}
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>

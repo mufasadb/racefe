@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { IconButton } from '@mui/material'
 import { Delete as DeleteIcon } from '@mui/icons-material'
+import { debounce } from 'lodash'
 
 const ScoreableObjectsTable = () => {
   const [scoreableEvents, setScoreableEvents] = useState([])
@@ -40,6 +41,84 @@ const ScoreableObjectsTable = () => {
       console.log(error)
     }
   }
+  //update scorablevents sort order, then debounce the api call
+  const handleSortOrderChange = (scoreableObjectId, sortOrder) => {
+    scoreableEvents.forEach(event => {
+      if (event.id === scoreableObjectId) {
+        event.sortOrder = sortOrder
+      }
+    })
+    setScoreableEvents([...scoreableEvents])
+    sendSortOrderToBackend(scoreableObjectId, sortOrder)
+  }
+
+  const handlePointChange = (scoreableObjectId, points) => {
+    scoreableEvents.forEach(event => {
+      if (event.id === scoreableObjectId) {
+        event.points = points
+      }
+    })
+    setScoreableEvents([...scoreableEvents])
+    sendPointsToBackend(scoreableObjectId, points)
+  }
+
+  const sendSortOrderToBackend = useCallback(
+    debounce(async (scoreableObjectId, sort_order) => {
+      // Handle role change for user
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoreable-objects/${scoreableObjectId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ sort_order: sort_order }),
+            credentials: 'include'
+          }
+        )
+        if (!response.ok) {
+          const errorData = await response.json()
+          console.error('Error data:', errorData)
+          return
+        }
+        // If the update was successful, you may want to refresh the user list
+        // fetchUsers()
+      } catch (error) {
+        console.error('Error updating user role:', error)
+      }
+    }, 500),
+    []
+  )
+  const sendPointsToBackend = useCallback(
+    debounce(async (scoreableObjectId, points) => {
+      points = parseInt(points)
+      // Handle role change for user
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoreable-objects/${scoreableObjectId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ points: points }),
+            credentials: 'include'
+          }
+        )
+        if (!response.ok) {
+          const errorData = await response.json()
+          console.error('Error data:', errorData)
+          return
+        }
+        // If the update was successful, you may want to refresh the user list
+        // fetchUsers()
+      } catch (error) {
+        console.error('Error updating user role:', error)
+      }
+    }, 500),
+    []
+  )
 
   const indexOfLastEvent = currentPage * eventsPerPage
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage
@@ -87,10 +166,24 @@ const ScoreableObjectsTable = () => {
             <tr key={event.id}>
               <td>{event.name}</td>
               <td>{event.description}</td>
-              <td>{event.sortOrder}</td>
+              <td>
+                <input
+                  type='number'
+                  value={event.sortOrder}
+                  onChange={e =>
+                    handleSortOrderChange(event.id, e.target.value)
+                  }
+                />
+              </td>
               <td>{event.requiresEvidence ? 'Yes' : 'No'}</td>
               <td>{event.leagueMultiplier ? 'Yes' : 'No'}</td>
-              <td>{event.points}</td>
+              <td>
+                <input
+                  type='number'
+                  value={event.points}
+                  onChange={e => handlePointChange(event.id, e.target.value)}
+                />
+              </td>
               <td>{convertTypeToHumanReadable(event.submittableType)}</td>
               <td>
                 <IconButton
