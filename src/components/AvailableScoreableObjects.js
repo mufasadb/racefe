@@ -105,6 +105,22 @@ const AvailableScoreableObjects = () => {
         return 'Unknown'
     }
   }
+  const submitTypeExplenation = type => {
+    switch (type) {
+      case 'character_objective':
+        return 'This objective can be completed once by each character'
+      case 'account_objective':
+        return 'This objective can be completed once by each account'
+      case 'team_objective':
+        return 'This objective can be completed once by each team'
+      case 'team_bounty':
+        return 'This bounty can only be claimed by a single team'
+      case 'account_bounty':
+        return 'This bounty can only be claimed by a single player'
+      default:
+        return 'Unknown'
+    }
+  }
 
   const trimDescription = description => {
     return description.length > 100
@@ -171,7 +187,17 @@ const AvailableScoreableObjects = () => {
                     {trimDescription(object.description)}
                   </TableCell>
                   <TableCell>{object.points}</TableCell>
-                  <TableCell>
+                  <TableCell
+                    aria-owns={open ? 'mouse-over-popover' : undefined}
+                    aria-haspopup='true'
+                    onMouseEnter={e =>
+                      handlePopoverOpen(
+                        e,
+                        submitTypeExplenation(object.submittableType)
+                      )
+                    }
+                    onMouseLeave={handlePopoverClose}
+                  >
                     {convertTypeToHumanReadable(object.submittableType)}
                   </TableCell>
                   {/* Render other object properties as needed */}
