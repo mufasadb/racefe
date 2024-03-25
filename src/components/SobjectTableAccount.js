@@ -46,12 +46,12 @@ const PublicScoreableObjectsTable = () => {
     }
   }
 
-  const indexOfLastEvent = currentPage * eventsPerPage
-  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage
-  const currentEvents = scoreableEvents.slice(
-    indexOfFirstEvent,
-    indexOfLastEvent
-  )
+  // const indexOfLastEvent = currentPage * eventsPerPage
+  // const indexOfFirstEvent = indexOfLastEvent - eventsPerPage
+  // const currentEvents = scoreableEvents.slice(
+  //   indexOfFirstEvent,
+  //   indexOfLastEvent
+  // )
   const convertTypeToHumanReadable = scoreableType => {
     switch (scoreableType) {
       case 'character_objective':
@@ -80,11 +80,11 @@ const PublicScoreableObjectsTable = () => {
             <th>Description</th>
             <th>League Multiplier</th>
             <th>Points</th>
-            <th>submittable_type</th>
+            <th>Submission Type</th>
           </tr>
         </thead>
         <tbody>
-          {currentEvents.map(event => (
+          {scoreableEvents.map(event => (
             <tr key={event.id}>
               <td>{event.name}</td>
               <td>{event.description}</td>

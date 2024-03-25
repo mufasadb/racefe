@@ -18,6 +18,9 @@ import UserContext from './context/UserContext'
 import ScoringEventsReviewPage from './components/ScoringEventsReviewPage'
 import ScoringEventsTable from './components/ScoringEventsTable'
 import AllScoreablesList from './components/AllScoreablesList'
+import Leaderboard from './components/FullLeaderBoard'
+
+
 const LoggedInRoute = ({ component: Component, ...rest }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
   useEffect(() => {
@@ -173,6 +176,7 @@ const App = () => {
                 component={ScoringEventsTable}
               />
               <Route path='/AllScoreablesList' component={AllScoreablesList} />
+              <Route path='/Leaderboard' component={Leaderboard} />
             </Switch>
           </Container>
         </div>

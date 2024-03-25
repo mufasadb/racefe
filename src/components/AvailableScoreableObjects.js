@@ -181,7 +181,11 @@ const AvailableScoreableObjects = () => {
                   <TableCell
                     aria-owns={open ? 'mouse-over-popover' : undefined}
                     aria-haspopup='true'
-                    onMouseEnter={e => handlePopoverOpen(e, object.description)}
+                    onMouseEnter={e => {
+                      if (object.description.length > 100) {
+                        handlePopoverOpen(e, object.description)
+                      }
+                    }}
                     onMouseLeave={handlePopoverClose}
                   >
                     {trimDescription(object.description)}

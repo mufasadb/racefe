@@ -81,11 +81,11 @@ const PublicScoreableObjectsTable = () => {
             <th>Description</th>
             <th>League Multiplier</th>
             <th>Points</th>
-            <th>submittable_type</th>
+            <th>Submittable Type</th>
           </tr>
         </thead>
         <tbody>
-          {currentEvents.map(event => (
+          {scoreableEvents.map(event => (
             <tr key={event.id}>
               <td>{event.name}</td>
               <td>{event.description}</td>

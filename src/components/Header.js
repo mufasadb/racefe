@@ -10,6 +10,9 @@ const Header = ({ isLoggedIn, isAdmin }) => {
         <li>
           <Link to='/'>Home</Link>
         </li>
+        <li>
+          <Link to='/Leaderboard'>Leaderboard</Link>
+        </li>
         {isLoggedIn && (
           <>
             <li>

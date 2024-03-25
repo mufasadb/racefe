@@ -19,7 +19,7 @@ const LeaderBoard = () => {
         `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/dashboard-data/leader-board`
       )
       const data = await response.json()
-      setLeaderboardData(data.slice(0, 5)) // Assuming the data is an array and taking the top 10
+      setLeaderboardData(data) // Assuming the data is an array and taking the top 10
     }
 
     fetchData().catch(console.error)
