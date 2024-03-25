@@ -52,9 +52,6 @@ const AvailableScoreableObjects = () => {
           `${process.env.REACT_APP_BACKEND_URL}${
             process.env.REACT_APP_BACKEND_PORT
           }/scoreable-objects/available/team-bounties/${teamId ? teamId : 1}`
-        ),
-        fetch(
-          `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoreable-objects/available/league-bounties`
         )
       ])
       const data = await Promise.all(responses.map(res => res.json()))

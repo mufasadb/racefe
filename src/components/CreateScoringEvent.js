@@ -56,9 +56,6 @@ const ScoringSubmission = () => {
               }/scoreable-objects/available/player-bounties/${
                 userId ? userId : 1
               }`
-            ),
-            fetch(
-              `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoreable-objects/available/league-bounties`
             )
           ])
           const data = await Promise.all(responses.map(res => res.json()))
@@ -83,9 +80,6 @@ const ScoringSubmission = () => {
               }/scoreable-objects/available/team-bounties/${
                 teamId ? teamId : 1
               }`
-            ),
-            fetch(
-              `${process.env.REACT_APP_BACKEND_URL}${process.env.REACT_APP_BACKEND_PORT}/scoreable-objects/available/league-bounties`
             )
           ])
           const data = await Promise.all(responses.map(res => res.json()))
@@ -162,6 +156,7 @@ const ScoringSubmission = () => {
       evidence_url: evidenceURL,
       is_approved: isAdmin ? isApproved : false // Only set if admin
     }
+  
 
     // Replace with your API endpoint
     fetch(
@@ -272,7 +267,7 @@ const ScoringSubmission = () => {
             id='teamID'
             value={teamID || teamId} // Defaults to context teamId if teamID state is not set
             onChange={e => setTeamID(e.target.value)}
-            disabled={!isAdmin}
+            disabled={!isTeamLeader}
           >
             {teams.map(team => (
               <option key={team.id} value={team.id}>
@@ -288,7 +283,7 @@ const ScoringSubmission = () => {
             id='userID'
             value={userID || userId} // Defaults to context userId if userID state is not set
             onChange={e => setUserID(e.target.value)}
-            disabled={!isAdmin}
+            disabled={!isTeamLeader}
           >
             {users.map(user => (
               <option key={user.id} value={user.id}>
