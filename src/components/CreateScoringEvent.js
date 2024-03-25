@@ -137,7 +137,7 @@ const ScoringSubmission = () => {
 
     fetchUsersAndTeams()
     // ... other fetch calls
-  }, [teamId, userId])
+  }, [teamId, userId, teamID, userID])
 
   const handleScoreableChange = e => {
     const selected = scoreableObjects.find(obj => obj.id == e.target.value)

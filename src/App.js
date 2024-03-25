@@ -19,7 +19,7 @@ import ScoringEventsReviewPage from './components/ScoringEventsReviewPage'
 import ScoringEventsTable from './components/ScoringEventsTable'
 import AllScoreablesList from './components/AllScoreablesList'
 import Leaderboard from './components/FullLeaderBoard'
-
+import BountyPage from './components/BountyPage'
 
 const LoggedInRoute = ({ component: Component, ...rest }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
@@ -177,6 +177,7 @@ const App = () => {
               />
               <Route path='/AllScoreablesList' component={AllScoreablesList} />
               <Route path='/Leaderboard' component={Leaderboard} />
+              <Route path='/Bounties' component={BountyPage} />
             </Switch>
           </Container>
         </div>

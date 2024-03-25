@@ -5,13 +5,15 @@ import Typography from '@mui/material/Typography'
 const Header = ({ isLoggedIn, isAdmin }) => {
   return (
     <nav>
-
       <ul>
         <li>
           <Link to='/'>Home</Link>
         </li>
         <li>
           <Link to='/Leaderboard'>Leaderboard</Link>
+        </li>
+        <li>
+          <Link to='/Bounties'>Completed Bounties</Link>
         </li>
         {isLoggedIn && (
           <>
