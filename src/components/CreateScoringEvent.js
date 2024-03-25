@@ -112,7 +112,7 @@ const ScoringSubmission = () => {
 
     fetchScoreableObjects()
     fetchLeagues()
-  }, [teamId, userId])
+  }, [teamID, userID])
 
   useEffect(() => {
     // Fetch users and teams
@@ -137,7 +137,8 @@ const ScoringSubmission = () => {
 
     fetchUsersAndTeams()
     // ... other fetch calls
-  }, [teamId, userId, teamID, userID])
+  }, [teamId, userId])
+
 
   const handleScoreableChange = e => {
     const selected = scoreableObjects.find(obj => obj.id == e.target.value)
