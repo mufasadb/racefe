@@ -48,13 +48,17 @@ const ScoringSubmission = () => {
   useEffect(() => {
     const fetchScoreableObjects = async () => {
       if (!isTeamLeader) {
+        console.log('not a team leader')
+        if (!userId) {
+          return
+        }
         try {
           const responses = await Promise.all([
             fetch(
               `${process.env.REACT_APP_BACKEND_URL}${
                 process.env.REACT_APP_BACKEND_PORT
               }/scoreable-objects/available/player-bounties/${
-                userId ? userId : 1
+                userID ? parseInt(userID) : parseInt(userId)
               }`
             )
           ])
@@ -65,20 +69,23 @@ const ScoringSubmission = () => {
           console.error(error)
         }
       } else {
+        if (userId === null || teamId === null) {
+          return
+        }
         try {
           const responses = await Promise.all([
             fetch(
               `${process.env.REACT_APP_BACKEND_URL}${
                 process.env.REACT_APP_BACKEND_PORT
               }/scoreable-objects/available/player-bounties/${
-                userId ? userId : 1
+                userID ? userID : userId
               }`
             ),
             fetch(
               `${process.env.REACT_APP_BACKEND_URL}${
                 process.env.REACT_APP_BACKEND_PORT
               }/scoreable-objects/available/team-bounties/${
-                teamId ? teamId : 1
+                teamID ? teamID : teamId
               }`
             )
           ])
@@ -150,13 +157,12 @@ const ScoringSubmission = () => {
     const data = {
       scoreable_object_id: parseInt(scoreableObjectID),
       league_id: parseInt(leagueID),
-      team_id: teamID || null,
-      user_id: userID || null,
+      team_id: parseInt(teamID) || null,
+      user_id: parseInt(userID) || null,
       character_id: characterID || null,
       evidence_url: evidenceURL,
       is_approved: isAdmin ? isApproved : false // Only set if admin
     }
-  
 
     // Replace with your API endpoint
     fetch(
