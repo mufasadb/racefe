@@ -47,54 +47,31 @@ const ScoringSubmission = () => {
   // Fetch scoreable objects
   useEffect(() => {
     const fetchScoreableObjects = async () => {
-      if (!isTeamLeader) {
-        console.log('not a team leader')
-        if (!userId) {
-          return
-        }
-        try {
-          const responses = await Promise.all([
-            fetch(
-              `${process.env.REACT_APP_BACKEND_URL}${
-                process.env.REACT_APP_BACKEND_PORT
-              }/scoreable-objects/available/player-bounties/${
-                userID ? parseInt(userID) : parseInt(userId)
-              }`
-            )
-          ])
-          const data = await Promise.all(responses.map(res => res.json()))
-          setScoreableObjects(data.flat())
-          setSelectedScoreable(scoreableObjects[0].id)
-        } catch (error) {
-          console.error(error)
-        }
-      } else {
-        if (userId === null || teamId === null) {
-          return
-        }
-        try {
-          const responses = await Promise.all([
-            fetch(
-              `${process.env.REACT_APP_BACKEND_URL}${
-                process.env.REACT_APP_BACKEND_PORT
-              }/scoreable-objects/available/player-bounties/${
-                userID ? userID : userId
-              }`
-            ),
-            fetch(
-              `${process.env.REACT_APP_BACKEND_URL}${
-                process.env.REACT_APP_BACKEND_PORT
-              }/scoreable-objects/available/team-bounties/${
-                teamID ? teamID : teamId
-              }`
-            )
-          ])
-          const data = await Promise.all(responses.map(res => res.json()))
-          setScoreableObjects(data.flat())
-          setSelectedScoreable(scoreableObjects[0].id)
-        } catch (error) {
-          console.error(error)
-        }
+      if (userId === null || teamId === null) {
+        return
+      }
+      try {
+        const responses = await Promise.all([
+          fetch(
+            `${process.env.REACT_APP_BACKEND_URL}${
+              process.env.REACT_APP_BACKEND_PORT
+            }/scoreable-objects/available/player-bounties/${
+              userID ? userID : userId
+            }`
+          ),
+          fetch(
+            `${process.env.REACT_APP_BACKEND_URL}${
+              process.env.REACT_APP_BACKEND_PORT
+            }/scoreable-objects/available/team-bounties/${
+              teamID ? teamID : teamId
+            }`
+          )
+        ])
+        const data = await Promise.all(responses.map(res => res.json()))
+        setScoreableObjects(data.flat())
+        setSelectedScoreable(scoreableObjects[0].id)
+      } catch (error) {
+        console.error(error)
       }
     }
 
@@ -139,7 +116,6 @@ const ScoringSubmission = () => {
     // ... other fetch calls
   }, [teamId, userId])
 
-
   const handleScoreableChange = e => {
     const selected = scoreableObjects.find(obj => obj.id == e.target.value)
     setSelectedScoreable(selected || {})
@@ -148,7 +124,7 @@ const ScoringSubmission = () => {
 
   const handleSubmit = event => {
     //check if all fields are full
-    if (!scoreableObjectID || !leagueID || !evidenceURL) {
+    if (!scoreableObjectID || !leagueID) {
       alert('Please fill out all fields')
       return
     }
